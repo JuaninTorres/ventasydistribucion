@@ -65,7 +65,7 @@ class Factura(models.Model):
     numero = models.IntegerField(unique=True)
     cliente = models.ForeignKey(Cliente)
     fecha = models.DateTimeField(auto_now=True)
-    estado_pago = models.CharField(choices=ESTADOS_FACTURA)
+    estado_pago = models.CharField(choices=ESTADOS_FACTURA, max_length=10)
     despachos = models.ManyToManyField(Despacho)
 
 
