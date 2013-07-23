@@ -62,7 +62,7 @@ class Factura(models.Model):
         ('pagada', 'Pagada'),
         ('no_pagada', 'No Pagada'),
     )
-    numero = models.AutoField(unique=True)
+    numero = models.IntegerField(unique=True)
     cliente = models.ForeignKey(Cliente)
     fecha = models.DateTimeField(auto_now=True)
     estado_pago = models.CharField(choices=ESTADOS_FACTURA)
