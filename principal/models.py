@@ -5,11 +5,12 @@ from django.db import models
 
 class Cliente(models.Model):
     nombre = models.CharField(max_length=255, verbose_name='Nombre o Razon Social')
-    rut = models.TextField(verbose_name='RUT')
-    giro = models.TextField(verbose_name='Giro')
+    rut = models.CharField(max_length=15, verbose_name='RUT')
+    giro = models.CharField(max_length=255, verbose_name='Giro')
     direccion = models.TextField(verbose_name='Dirección')
-    telefono = models.TextField(verbose_name='Teléfono')
-    contacto = models.TextField(verbose_name='Persona de Contacto')
+    comuna = models.CharField(max_length=255, verbose_name='Comuna')
+    telefono = models.CharField(max_length=12, verbose_name='Teléfono')
+    contacto = models.CharField(max_length=255, verbose_name='Persona de Contacto')
 
     def __unicode__(self):
         return self.nombre
@@ -55,6 +56,10 @@ class Pedido(models.Model):
     producto = models.ForeignKey(Producto, verbose_name='Producto')
     despacho = models.ForeignKey(Despacho, verbose_name='Despacho')
     cantidad = models.IntegerField(verbose_name='Cantidad')
+    valor = models.IntegerField(verbose_name='Valor bruto')
+
+    def __unicode__(self):
+        return 'pedido-' + self.id
 
 
 class Factura(models.Model):
@@ -68,9 +73,21 @@ class Factura(models.Model):
     estado_pago = models.CharField(choices=ESTADOS_FACTURA, max_length=10)
     despachos = models.ManyToManyField(Despacho)
 
+    def __unicode__(self):
+        return 'factura-' + self.id
+
 
 class PrestamoEnvase(models.Model):
     cliente = models.ForeignKey(Cliente, verbose_name='Cliente a quien se le ha prestado')
     envase = models.ForeignKey(Envase, verbose_name='Tipo de envases')
     cantidad = models.IntegerField(verbose_name='Cantidad')
+    fecha = models.DateTimeField(auto_now=True)
+
+    def __unicode__(self):
+        return 'prestamo-' + self.fecha
+
+
+class Precio(models.Model):
+    valor = models.IntegerField()
+    producto = models.ForeignKey(Producto)
     fecha = models.DateTimeField(auto_now=True)

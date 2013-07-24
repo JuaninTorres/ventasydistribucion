@@ -125,6 +125,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'principal',
+    'django_extensions',
 )
 
 try:
